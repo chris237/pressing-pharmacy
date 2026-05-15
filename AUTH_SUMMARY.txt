@@ -1,0 +1,485 @@
+╔═══════════════════════════════════════════════════════════════╗
+║                                                               ║
+║     🔐 SYSTÈME D'AUTHENTIFICATION & RAPPORTS AVANCÉS         ║
+║                                                               ║
+║     AJOUT: Rôles, Permissions & Rapports Multi-niveaux      ║
+║                                                               ║
+╚═══════════════════════════════════════════════════════════════╝
+
+✨ AMÉLIORATIONS APPORTÉES
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+1️⃣ SYSTÈME D'AUTHENTIFICATION COMPLET
+
+   ✅ Inscription utilisateurs
+   ✅ Connexion sécurisée (JWT)
+   ✅ Mots de passe hashés (Bcrypt)
+   ✅ Tokens avec expiration (7 jours)
+   ✅ Refresh tokens
+   ✅ Déconnexion
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+2️⃣ TROIS RÔLES D'UTILISATEURS
+
+   👤 CLIENT
+      • Accès aux services personnels
+      • Voir ses commandes
+      • Historique personnel
+      • Interface simplifiée
+
+   💼 VENDEUR
+      • Enregistrer ventes
+      • Voir ses ventes
+      • Consulter rapports
+      • Gestion stock (lecture)
+
+   👑 ADMIN
+      • Accès complet
+      • Gestion utilisateurs
+      • Tous les rapports
+      • Logs d'audit
+      • Configuration système
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+3️⃣ PERMISSIONS GRANULAIRES
+
+   ✅ Contrôle par module
+   ✅ Contrôle par action (read, create, update, delete)
+   ✅ Permissions par rôle
+   ✅ Services autorisés par utilisateur
+   ✅ Audit complet des actions
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+4️⃣ 7 TYPES DE RAPPORTS AVANCÉS
+
+   📅 JOURNALIER
+      • Stats d'une journée
+      • Par service
+      • Montants & nombres
+
+   📆 MENSUEL
+      • Détails par jour du mois
+      • Tendances
+      • Comparaisons
+
+   📦 PAR PRODUIT/SERVICE
+      • Ventes par type
+      • Montants min/max/moyen
+      • Top services
+
+   👤 PAR CLIENT
+      • Historique complet
+      • Total des achats
+      • Services utilisés
+
+   💼 PAR VENDEUR
+      • Performance vendeur
+      • Ventes périodiques
+      • Commissions calculables
+
+   📊 STOCK
+      • Inventaire complet
+      • Alertes rupture
+      • Valeur stock totale
+
+   📈 PERFORMANCE
+      • Vue d'ensemble globale
+      • Nouveaux clients
+      • Revenus totaux
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+5️⃣ FILTRES RAPPORTS AVANCÉS
+
+   ✅ Par date (plage personnalisée)
+   ✅ Par service (pressing, médicaments, soins)
+   ✅ Par client
+   ✅ Par vendeur
+   ✅ Par statut (collecte, lavage, prêt, livré)
+   ✅ Par produit
+   ✅ Combinaisons multiples
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+6️⃣ SÉCURITÉ RENFORCÉE
+
+   ✅ JWT Tokens
+   ✅ Bcrypt pour mots de passe
+   ✅ Rate Limiting (anti-bruteforce)
+   ✅ Helmet.js (headers sécurité)
+   ✅ CORS configuré
+   ✅ Validation express-validator
+   ✅ Audit logs complets
+   ✅ IP tracking
+   ✅ Contrôle d'accès par rôle
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+7️⃣ NOUVELLE INTERFACE DE LOGIN
+
+   ✅ Login page séparée
+   ✅ Inscription clients/vendeurs
+   ✅ Dashboards différents par rôle
+   ✅ Responsive mobile
+   ✅ Design professionnel
+   ✅ Messages d'erreur clairs
+   ✅ Gestion tokens automatique
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+8️⃣ EXPORT RAPPORTS
+
+   ✅ Export CSV
+   ✅ Formats personnalisables
+   ✅ Téléchargement automatique
+   ✅ Excel compatible
+   ✅ Archivage
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+NOUVEAUX FICHIERS
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✓ auth.js
+  • Authentification JWT
+  • Gestion des rôles
+  • Validation tokens
+  • Hash passwords
+
+✓ auth-routes.js
+  • Endpoints d'authentification
+  • Routes rapports
+  • Gestion utilisateurs (admin)
+  • Logs d'audit
+
+✓ reports.js
+  • Moteur de rapports
+  • 7 types de rapports
+  • Filtres avancés
+  • Export CSV
+
+✓ public/auth.html
+  • Interface de login
+  • Dashboards par rôle
+  • Gestion rapports UI
+  • Responsive design
+
+✓ AUTH_AND_REPORTS_GUIDE.md
+  • Documentation complète
+  • Exemples d'utilisation
+  • Routes API
+  • Workflow par rôle
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+INTÉGRATION DANS LE SERVEUR
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+À ajouter dans server.js:
+
+  const helmet = require('helmet');
+  const rateLimit = require('express-rate-limit');
+  const auth = require('./auth');
+  const authRoutes = require('./auth-routes');
+
+  // Sécurité
+  app.use(helmet());
+
+  // Rate limiting
+  const limiter = rateLimit({
+    windowMs: 15 * 60 * 1000,
+    max: 100
+  });
+  app.use(limiter);
+
+  // Routes d'authentification
+  app.use('/api', authRoutes);
+
+  // Initialiser les rôles par défaut
+  auth.initializeDefaultRoles();
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+FLUX DE CONNEXION
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+1. Utilisateur accède: http://localhost:3000/public/auth.html
+
+2. Voir login page:
+   • Onglet Connexion (pour utilisateurs existants)
+   • Onglet Inscription (pour nouveaux)
+
+3. CONNEXION:
+   ├─ Email + Mot de passe
+   ├─ Vérification base de données
+   ├─ Vérification mot de passe (Bcrypt)
+   ├─ Génération JWT token
+   ├─ Stockage localStorage
+   └─ Redirection dashboard
+
+4. INSCRIPTION:
+   ├─ Remplir formulaire
+   ├─ Validation données
+   ├─ Hash mot de passe
+   ├─ Créer utilisateur
+   ├─ Générer token
+   └─ Connexion automatique
+
+5. APRÈS CONNEXION:
+   ├─ Dashboard selon rôle:
+   │  ├─ ADMIN: Stats globales, gestion users, rapports
+   │  ├─ VENDEUR: Ses ventes, ses rapports
+   │  └─ CLIENT: Ses services, son historique
+   ├─ Navigation selon permissions
+   └─ Token automatiquement utilisé dans requêtes
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+TYPES DE RAPPORTS DISPONIBLES
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+ADMIN ONLY:
+
+  📅 Journalier
+     URL: /api/rapports/journalier?date=2024-01-15
+     Retour: Stats du jour (tous services)
+
+  📆 Mensuel
+     URL: /api/rapports/mensuel?year=2024&month=01
+     Retour: Détails par jour du mois
+
+  💼 Par Vendeur
+     URL: /api/rapports/vendeur/:vendeurId
+     Retour: Ventes du vendeur
+
+  📈 Performance
+     URL: /api/rapports/performance
+     Retour: Vue d'ensemble
+
+ADMIN + VENDEUR:
+
+  📊 Stock
+     URL: /api/rapports/stock
+     Retour: Inventaire médicaments
+
+TOUT RÔLE:
+
+  📦 Par Produit
+     URL: /api/rapports/produits?type=pressing
+     Retour: Stats par type service
+
+  👤 Par Client
+     URL: /api/rapports/client/:clientId
+     Retour: Historique client
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+BASES DE DONNÉES - NOUVELLES TABLES
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+roles
+├─ id
+├─ nom (admin, vendeur, client)
+├─ description
+└─ niveau
+
+users
+├─ id
+├─ nom
+├─ email (unique)
+├─ password (hashed)
+├─ role_id
+├─ phone
+├─ services_autorise
+├─ statut
+└─ dernier_login
+
+permissions
+├─ id
+├─ nom (clients_read, pressing_create, etc)
+├─ description
+├─ module
+└─ action
+
+role_permissions (Many-to-Many)
+├─ id
+├─ role_id
+└─ permission_id
+
+audit_logs
+├─ id
+├─ user_id
+├─ action
+├─ module
+├─ reference_id
+├─ ancienne_valeur
+├─ nouvelle_valeur
+├─ ip_address
+└─ date_action
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+DÉPLOIEMENT
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+1. Installer nouvelles dépendances:
+   npm install
+
+   Nouvelles packages:
+   - jsonwebtoken (JWT)
+   - bcryptjs (mots de passe)
+   - json2csv (export)
+   - helmet (sécurité)
+   - express-rate-limit (rate limit)
+   - express-validator (validation)
+
+2. Démarrer le serveur:
+   npm start
+
+3. Ajouter les routes dans server.js:
+   - Importer auth.js et auth-routes.js
+   - Ajouter les middlewares
+   - Appeler initializeDefaultRoles()
+
+4. Accéder:
+   http://localhost:3000/public/auth.html
+
+5. Créer premier admin (optionnel):
+   Via POST /api/admin/users avec token admin
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+UTILISATEURS PAR DÉFAUT
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Créez vous-même via signup ou via SQL:
+
+Admin:
+  Email: admin@example.com
+  Password: admin123456
+  Role: admin
+
+Vendeur:
+  Email: vendeur@example.com
+  Password: vendeur123456
+  Role: vendeur
+
+Client:
+  Email: client@example.com
+  Password: client123456
+  Role: client
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+CAS D'USAGE
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+👑 ADMIN NEEDS:
+
+  "Je veux voir les revenus du mois"
+  → GET /api/rapports/mensuel?year=2024&month=01
+
+  "Je veux comparer les performance"
+  → GET /api/rapports/performance
+
+  "Je veux gérer les vendeurs"
+  → GET /api/admin/users + PUT/POST
+
+  "Je veux voir qui a fait quoi"
+  → GET /api/admin/audit-logs
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+💼 VENDEUR NEEDS:
+
+  "Mes ventes du mois?"
+  → GET /api/rapports/vendeur/:vendeurId
+
+  "Quel produit se vend le plus?"
+  → GET /api/rapports/produits?type=medicaments
+
+  "Quels médicaments manquent?"
+  → GET /api/rapports/stock
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+👤 CLIENT NEEDS:
+
+  "Où en est ma commande?"
+  → GET /api/rapports/client/:clientId
+
+  "Historique de mes achats?"
+  → Dashboard client
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+NOTES DE SÉCURITÉ
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+⚠️ EN PRODUCTION:
+
+  1. Changer JWT_SECRET
+  2. Configurer HTTPS
+  3. Utiliser variables d'environnement
+  4. Configurer CORS correctement
+  5. Implémenter refresh token rotation
+  6. Ajouter 2FA (optionnel)
+  7. Surveiller audit logs
+  8. Rate limiting ajusté
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+PROCHAINES AMÉLIORATIONS
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🔜 2FA (Authentification à deux facteurs)
+🔜 SSO (Single Sign-On)
+🔜 Webhooks pour alertes
+🔜 Email notifications
+🔜 Graphiques rapports
+🔜 Planification rapports automatiques
+🔜 Permissions custom par utilisateur
+🔜 Sessions multiples
+🔜 Password reset
+🔜 Account recovery
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✅ SYSTÈME COMPLET ET PRÊT! 🎉
+
+Vous avez maintenant:
+✓ Authentification sécurisée
+✓ 3 rôles différents
+✓ Permissions granulaires
+✓ 7 types de rapports
+✓ Filtres avancés
+✓ Export CSV
+✓ Audit complet
+✓ Interface responsive
+
+COMMENCEZ:
+1. npm install
+2. Intégrer auth-routes dans server.js
+3. npm start
+4. Accéder http://localhost:3000/public/auth.html
+5. Créer compte
+6. Consulter rapports
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Pour plus de détails: AUTH_AND_REPORTS_GUIDE.md
+

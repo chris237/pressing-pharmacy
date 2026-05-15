@@ -1,0 +1,120 @@
+version: '3.8'
+
+services:
+  # Application Node.js
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: pressing-pharmacy-app
+    ports:
+      - "3000:3000"
+    environment:
+      NODE_ENV: ${NODE_ENV:-production}
+      PORT: 3000
+      DATABASE_PATH: /app/data/app.db
+      
+      # JWT
+      JWT_SECRET: ${JWT_SECRET:-change-this-in-production}
+      JWT_EXPIRY: 7d
+      
+      # WhatsApp/Twilio
+      TWILIO_ACCOUNT_SID: ${TWILIO_ACCOUNT_SID}
+      TWILIO_AUTH_TOKEN: ${TWILIO_AUTH_TOKEN}
+      TWILIO_WHATSAPP_NUMBER: ${TWILIO_WHATSAPP_NUMBER}
+      TWILIO_PHONE_NUMBER: ${TWILIO_PHONE_NUMBER}
+      
+      # Email
+      EMAIL_USER: ${EMAIL_USER}
+      EMAIL_PASSWORD: ${EMAIL_PASSWORD}
+      
+      # Push Notifications
+      VAPID_PUBLIC_KEY: ${VAPID_PUBLIC_KEY}
+      VAPID_PRIVATE_KEY: ${VAPID_PRIVATE_KEY}
+      VAPID_SUBJECT: ${VAPID_SUBJECT}
+      
+      # Redis (cache optionnel)
+      REDIS_URL: redis://redis:6379
+      
+      # Sentry (error tracking optionnel)
+      SENTRY_DSN: ${SENTRY_DSN}
+      
+    volumes:
+      - ./data:/app/data
+      - ./logs:/app/logs
+      - ./backups:/app/backups
+    depends_on:
+      - redis
+    networks:
+      - pressing-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  # Redis pour caching
+  redis:
+    image: redis:7-alpine
+    container_name: pressing-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+    networks:
+      - pressing-network
+    restart: unless-stopped
+    command: redis-server --appendonly yes
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # PostgreSQL (optionnel, pour production)
+  # postgres:
+  #   image: postgres:15-alpine
+  #   container_name: pressing-postgres
+  #   environment:
+  #     POSTGRES_DB: pressing_db
+  #     POSTGRES_USER: ${DB_USER}
+  #     POSTGRES_PASSWORD: ${DB_PASSWORD}
+  #   volumes:
+  #     - postgres-data:/var/lib/postgresql/data
+  #   networks:
+  #     - pressing-network
+  #   restart: unless-stopped
+  #   ports:
+  #     - "5432:5432"
+
+  # Nginx (reverse proxy optionnel)
+  # nginx:
+  #   image: nginx:alpine
+  #   container_name: pressing-nginx
+  #   ports:
+  #     - "80:80"
+  #     - "443:443"
+  #   volumes:
+  #     - ./nginx.conf:/etc/nginx/nginx.conf
+  #     - ./ssl:/etc/nginx/ssl
+  #   depends_on:
+  #     - app
+  #   networks:
+  #     - pressing-network
+  #   restart: unless-stopped
+
+volumes:
+  redis-data:
+  postgres-data:
+
+networks:
+  pressing-network:
+    driver: bridge
+
+# Utilisation:
+# docker-compose up
+# docker-compose down
+# docker-compose logs -f app
+# docker-compose exec app npm run migrate

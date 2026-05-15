@@ -1,0 +1,1133 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pressing & Pharmacy Manager</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #2196F3;
+            --secondary: #FF9800;
+            --success: #4CAF50;
+            --danger: #F44336;
+            --dark: #333;
+            --light: #f5f5f5;
+            --border: #ddd;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--light);
+            color: var(--dark);
+        }
+
+        /* Header Navigation */
+        header {
+            background: var(--primary);
+            color: white;
+            padding: 1rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        header h1 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .nav-tabs {
+            display: flex;
+            gap: 0.5rem;
+            overflow-x: auto;
+            flex-wrap: wrap;
+        }
+
+        .nav-tabs button {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: none;
+            padding: 0.7rem 1.2rem;
+            cursor: pointer;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            white-space: nowrap;
+            transition: 0.3s;
+        }
+
+        .nav-tabs button.active {
+            background: white;
+            color: var(--primary);
+            font-weight: bold;
+        }
+
+        .nav-tabs button:hover {
+            background: rgba(255,255,255,0.3);
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem;
+        }
+
+        .section {
+            display: none;
+            animation: fadeIn 0.3s;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Cards */
+        .card {
+            background: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            border-left: 4px solid var(--primary);
+        }
+
+        .card h2 {
+            margin-top: 0;
+            margin-bottom: 1rem;
+            color: var(--primary);
+            font-size: 1.3rem;
+        }
+
+        .card.success { border-left-color: var(--success); }
+        .card.warning { border-left-color: var(--secondary); }
+        .card.danger { border-left-color: var(--danger); }
+
+        /* Forms */
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--dark);
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        input[type="number"],
+        input[type="date"],
+        input[type="datetime-local"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 0.7rem;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            font-size: 1rem;
+            font-family: inherit;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(33,150,243,0.1);
+        }
+
+        /* Buttons */
+        .btn {
+            padding: 0.7rem 1.5rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: 0.3s;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #1976D2;
+        }
+
+        .btn-success {
+            background: var(--success);
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #45a049;
+        }
+
+        .btn-secondary {
+            background: var(--secondary);
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #F57C00;
+        }
+
+        .btn-danger {
+            background: var(--danger);
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #d32f2f;
+        }
+
+        .btn-small {
+            padding: 0.4rem 0.8rem;
+            font-size: 0.85rem;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+        }
+
+        /* Tables */
+        .table-responsive {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+
+        th {
+            background: var(--light);
+            padding: 0.8rem;
+            text-align: left;
+            font-weight: 600;
+            border-bottom: 2px solid var(--border);
+        }
+
+        td {
+            padding: 0.8rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        tr:hover {
+            background: #fafafa;
+        }
+
+        /* Status Badges */
+        .badge {
+            display: inline-block;
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .badge-collecte { background: #E3F2FD; color: var(--primary); }
+        .badge-lavage { background: #FFF3E0; color: var(--secondary); }
+        .badge-pret { background: #E8F5E9; color: var(--success); }
+        .badge-livre { background: #F3E5F5; color: #9C27B0; }
+
+        /* Grid Layout */
+        .grid {
+            display: grid;
+            gap: 1.5rem;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        }
+
+        .grid-2 {
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        }
+
+        /* Stats */
+        .stat-box {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .stat-box .number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        .stat-box .label {
+            color: #666;
+            margin-top: 0.5rem;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 600px;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .modal-close {
+            float: right;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #999;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.2rem;
+            }
+
+            .nav-tabs button {
+                padding: 0.5rem 0.8rem;
+                font-size: 0.8rem;
+            }
+
+            .card {
+                padding: 1rem;
+            }
+
+            .grid {
+                grid-template-columns: 1fr;
+            }
+
+            .btn-group {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+            }
+
+            table {
+                font-size: 0.9rem;
+            }
+
+            th, td {
+                padding: 0.5rem;
+            }
+        }
+
+        /* Alert Messages */
+        .alert {
+            padding: 1rem;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+        }
+
+        .alert-success {
+            background: #E8F5E9;
+            color: var(--success);
+            border: 1px solid var(--success);
+        }
+
+        .alert-error {
+            background: #FFEBEE;
+            color: var(--danger);
+            border: 1px solid var(--danger);
+        }
+
+        .alert-warning {
+            background: #FFF3E0;
+            color: var(--secondary);
+            border: 1px solid var(--secondary);
+        }
+
+        /* Loading Spinner */
+        .spinner {
+            border: 3px solid var(--light);
+            border-top: 3px solid var(--primary);
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 2rem auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .text-center { text-align: center; }
+        .mt-1 { margin-top: 1rem; }
+        .mb-1 { margin-bottom: 1rem; }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <h1>📱 Pressing & Pharmacy</h1>
+        <div class="nav-tabs">
+            <button class="nav-btn active" data-section="dashboard">📊 Dashboard</button>
+            <button class="nav-btn" data-section="clients">👥 Clients</button>
+            <button class="nav-btn" data-section="pressing">👔 Pressing</button>
+            <button class="nav-btn" data-section="medicaments">💊 Médicaments</button>
+            <button class="nav-btn" data-section="services">🩺 Soins</button>
+            <button class="nav-btn" data-section="rapports">📈 Rapports</button>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Alert Messages -->
+        <div id="alertContainer"></div>
+
+        <!-- DASHBOARD -->
+        <section id="dashboard" class="section active">
+            <div class="grid grid-2">
+                <div class="stat-box">
+                    <div class="number" id="stat-clients">0</div>
+                    <div class="label">Total Clients</div>
+                </div>
+                <div class="stat-box">
+                    <div class="number" id="stat-pressing">0 FCFA</div>
+                    <div class="label">Pressing (Mois)</div>
+                </div>
+                <div class="stat-box">
+                    <div class="number" id="stat-medicaments">0 FCFA</div>
+                    <div class="label">Médicaments (Mois)</div>
+                </div>
+                <div class="stat-box" style="border-top: 3px solid var(--danger);">
+                    <div class="number" id="stat-rupture" style="color: var(--danger);">0</div>
+                    <div class="label">Ruptures Stock</div>
+                </div>
+            </div>
+
+            <div class="card mt-1">
+                <h2>Activités Récentes</h2>
+                <div id="recent-activities">
+                    <p class="text-center">Chargement...</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- CLIENTS -->
+        <section id="clients" class="section">
+            <div class="card">
+                <h2>Ajouter un Client</h2>
+                <form id="clientForm">
+                    <div class="grid grid-2">
+                        <div class="form-group">
+                            <label>Nom Complet *</label>
+                            <input type="text" name="nom" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Type de Client *</label>
+                            <select name="type" required>
+                                <option>Pressing</option>
+                                <option>Médicaments</option>
+                                <option>Soins Infirmiers</option>
+                                <option>Tous les services</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Téléphone *</label>
+                            <input type="tel" name="telephone" required>
+                        </div>
+                        <div class="form-group">
+                            <label>WhatsApp</label>
+                            <input type="tel" name="whatsapp">
+                        </div>
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input type="email" name="email">
+                        </div>
+                        <div class="form-group">
+                            <label>Adresse</label>
+                            <input type="text" name="adresse">
+                        </div>
+                    </div>
+                    <div class="btn-group">
+                        <button type="submit" class="btn btn-primary">✅ Ajouter Client</button>
+                        <button type="reset" class="btn btn-secondary">Réinitialiser</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="card">
+                <h2>Liste des Clients</h2>
+                <div class="table-responsive">
+                    <table id="clientsTable">
+                        <thead>
+                            <tr>
+                                <th>Nom</th>
+                                <th>Téléphone</th>
+                                <th>Type</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- PRESSING -->
+        <section id="pressing" class="section">
+            <div class="card">
+                <h2>Nouveau Service Pressing</h2>
+                <form id="pressingForm">
+                    <div class="grid grid-2">
+                        <div class="form-group">
+                            <label>Client *</label>
+                            <select name="client_id" required>
+                                <option value="">-- Sélectionner --</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Type de Service *</label>
+                            <select name="type_service" required>
+                                <option>Lavage Simple</option>
+                                <option>Repassage</option>
+                                <option>Nettoyage Spécial</option>
+                                <option>Teinture</option>
+                                <option>Réparation</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Nombre de Vêtements *</label>
+                            <input type="number" name="nombre_vetements" min="1" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Prix Total (FCFA) *</label>
+                            <input type="number" name="prix_total" min="0" step="100" required>
+                        </div>
+                        <div class="form-group" style="grid-column: 1 / -1;">
+                            <label>Description</label>
+                            <textarea name="description" placeholder="Détails des vêtements..."></textarea>
+                        </div>
+                    </div>
+                    <div class="btn-group">
+                        <button type="submit" class="btn btn-primary">✅ Créer Service</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="card">
+                <h2>Services Pressing</h2>
+                <div class="table-responsive">
+                    <table id="pressingTable">
+                        <thead>
+                            <tr>
+                                <th>Client</th>
+                                <th>Service</th>
+                                <th>Montant</th>
+                                <th>Statut</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- MÉDICAMENTS -->
+        <section id="medicaments" class="section">
+            <div class="grid">
+                <div class="card">
+                    <h2>Ajouter Médicament</h2>
+                    <form id="medicamentForm">
+                        <div class="form-group">
+                            <label>Nom du Médicament *</label>
+                            <input type="text" name="nom" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Dosage</label>
+                            <input type="text" name="dosage" placeholder="ex: 500mg">
+                        </div>
+                        <div class="form-group">
+                            <label>Catégorie</label>
+                            <select name="categorie">
+                                <option>Analgésiques</option>
+                                <option>Antibiotiques</option>
+                                <option>Antiinflammatoires</option>
+                                <option>Vitamines</option>
+                                <option>Autres</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Quantité Stock *</label>
+                            <input type="number" name="quantite_stock" min="0" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Prix Vente (FCFA) *</label>
+                            <input type="number" name="prix_vente" min="0" step="100" required>
+                        </div>
+                        <div class="btn-group">
+                            <button type="submit" class="btn btn-primary">➕ Ajouter</button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="card">
+                    <h2>Vendre Médicament</h2>
+                    <form id="venteMedicamentForm">
+                        <div class="form-group">
+                            <label>Client *</label>
+                            <select name="client_id" required>
+                                <option value="">-- Sélectionner --</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Médicament *</label>
+                            <select name="medicament_id" required>
+                                <option value="">-- Sélectionner --</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Quantité *</label>
+                            <input type="number" name="quantite" min="1" required>
+                        </div>
+                        <div class="btn-group">
+                            <button type="submit" class="btn btn-success">💰 Vendre</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>Stock Médicaments</h2>
+                <div class="table-responsive">
+                    <table id="medicamentsTable">
+                        <thead>
+                            <tr>
+                                <th>Médicament</th>
+                                <th>Dosage</th>
+                                <th>Stock</th>
+                                <th>Prix</th>
+                                <th>État</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- SERVICES INFIRMIERS -->
+        <section id="services" class="section">
+            <div class="card">
+                <h2>Programmer un Service Infirmier</h2>
+                <form id="serviceForm">
+                    <div class="grid grid-2">
+                        <div class="form-group">
+                            <label>Client *</label>
+                            <select name="client_id" required>
+                                <option value="">-- Sélectionner --</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Type de Service *</label>
+                            <select name="type_service" required>
+                                <option>Injection</option>
+                                <option>Pansement</option>
+                                <option>Prélèvement Sanguin</option>
+                                <option>Consultation</option>
+                                <option>Visite Domicile</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Date & Heure *</label>
+                            <input type="datetime-local" name="date_service" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Prix (FCFA) *</label>
+                            <input type="number" name="prix" min="0" step="100" required>
+                        </div>
+                        <div class="form-group" style="grid-column: 1 / -1;">
+                            <label>Notes</label>
+                            <textarea name="description" placeholder="Observations..."></textarea>
+                        </div>
+                    </div>
+                    <div class="btn-group">
+                        <button type="submit" class="btn btn-success">✅ Programmer</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="card">
+                <h2>Services Programmés</h2>
+                <div class="table-responsive">
+                    <table id="servicesTable">
+                        <thead>
+                            <tr>
+                                <th>Client</th>
+                                <th>Type</th>
+                                <th>Date</th>
+                                <th>Prix</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- RAPPORTS -->
+        <section id="rapports" class="section">
+            <div class="grid grid-2">
+                <div class="card">
+                    <h2>Revenus Pressing</h2>
+                    <div style="text-align: center;">
+                        <div style="font-size: 2rem; font-weight: bold; color: var(--primary);" id="revenue-pressing">0 FCFA</div>
+                        <p>Ce mois</p>
+                        <button class="btn btn-primary btn-small mt-1" onclick="exportReport('pressing')">📥 Exporter</button>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h2>Revenus Médicaments</h2>
+                    <div style="text-align: center;">
+                        <div style="font-size: 2rem; font-weight: bold; color: var(--success);" id="revenue-medicaments">0 FCFA</div>
+                        <p>Ce mois</p>
+                        <button class="btn btn-success btn-small mt-1" onclick="exportReport('medicaments')">📥 Exporter</button>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h2>Revenus Soins Infirmiers</h2>
+                    <div style="text-align: center;">
+                        <div style="font-size: 2rem; font-weight: bold; color: var(--secondary);" id="revenue-services">0 FCFA</div>
+                        <p>Ce mois</p>
+                        <button class="btn btn-secondary btn-small mt-1" onclick="exportReport('services')">📥 Exporter</button>
+                    </div>
+                </div>
+
+                <div class="card danger">
+                    <h2>Stock Critique</h2>
+                    <div id="stock-critique">Chargement...</div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- WhatsApp Modal -->
+    <div id="whatsappModal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal('whatsappModal')">&times;</span>
+            <h2>Envoyer Message WhatsApp</h2>
+            <form id="whatsappForm">
+                <div class="form-group">
+                    <label>Numéro WhatsApp *</label>
+                    <input type="tel" id="whatsappNumber" required>
+                </div>
+                <div class="form-group">
+                    <label>Message *</label>
+                    <textarea id="whatsappMessage" required placeholder="Votre message ici..."></textarea>
+                </div>
+                <div class="form-group">
+                    <p style="font-size: 0.9rem; color: #666;">
+                        💡 Conseil: Vous pouvez copier le message et l'envoyer via WhatsApp Web ou l'app mobile
+                    </p>
+                </div>
+                <div class="btn-group">
+                    <button type="button" class="btn btn-primary" onclick="copyToClipboard()">📋 Copier Message</button>
+                    <button type="button" class="btn btn-success" onclick="openWhatsApp()">💬 Ouvrir WhatsApp</button>
+                    <button type="button" class="btn btn-secondary" onclick="closeModal('whatsappModal')">Fermer</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const API_URL = 'http://localhost:3000/api';
+
+        // Navigation
+        document.querySelectorAll('.nav-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+                document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+                
+                e.target.classList.add('active');
+                const sectionId = e.target.dataset.section;
+                document.getElementById(sectionId).classList.add('active');
+                
+                loadSectionData(sectionId);
+            });
+        });
+
+        // Load initial data
+        function loadSectionData(section) {
+            switch(section) {
+                case 'dashboard':
+                    loadDashboard();
+                    break;
+                case 'clients':
+                    loadClients();
+                    break;
+                case 'pressing':
+                    loadPressing();
+                    break;
+                case 'medicaments':
+                    loadMedicaments();
+                    break;
+                case 'services':
+                    loadServices();
+                    break;
+                case 'rapports':
+                    loadRapports();
+                    break;
+            }
+        }
+
+        // Alert Function
+        function showAlert(message, type = 'success') {
+            const alertDiv = document.createElement('div');
+            alertDiv.className = `alert alert-${type}`;
+            alertDiv.textContent = message;
+            document.getElementById('alertContainer').appendChild(alertDiv);
+            
+            setTimeout(() => {
+                alertDiv.remove();
+            }, 4000);
+        }
+
+        // Modal Functions
+        function openModal(modalId) {
+            document.getElementById(modalId).classList.add('active');
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove('active');
+        }
+
+        // Copy to Clipboard
+        function copyToClipboard() {
+            const message = document.getElementById('whatsappMessage').value;
+            navigator.clipboard.writeText(message).then(() => {
+                showAlert('Message copié! 📋');
+            });
+        }
+
+        // Open WhatsApp
+        function openWhatsApp() {
+            const number = document.getElementById('whatsappNumber').value.replace(/[^0-9]/g, '');
+            const message = document.getElementById('whatsappMessage').value;
+            const whatsappUrl = `https://wa.me/${number}?text=${encodeURIComponent(message)}`;
+            window.open(whatsappUrl, '_blank');
+        }
+
+        // ===== CLIENTS =====
+        document.getElementById('clientForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            
+            try {
+                const response = await fetch(`${API_URL}/clients`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(Object.fromEntries(formData))
+                });
+                
+                const data = await response.json();
+                showAlert('✅ Client ajouté avec succès!');
+                e.target.reset();
+                loadClients();
+            } catch (err) {
+                showAlert('❌ Erreur: ' + err.message, 'error');
+            }
+        });
+
+        async function loadClients() {
+            try {
+                const response = await fetch(`${API_URL}/clients`);
+                const clients = await response.json();
+                
+                // Update dropdowns
+                document.querySelectorAll('select[name="client_id"]').forEach(select => {
+                    select.innerHTML = '<option value="">-- Sélectionner --</option>';
+                    clients.forEach(client => {
+                        select.innerHTML += `<option value="${client.id}">${client.nom}</option>`;
+                    });
+                });
+                
+                // Update table
+                const tbody = document.querySelector('#clientsTable tbody');
+                tbody.innerHTML = clients.map(client => `
+                    <tr>
+                        <td>${client.nom}</td>
+                        <td>${client.telephone}</td>
+                        <td><span class="badge badge-collecte">${client.type}</span></td>
+                        <td>
+                            <button class="btn btn-small btn-primary" onclick="editClient('${client.id}')">✏️</button>
+                            <button class="btn btn-small btn-secondary" onclick="sendWhatsApp('${client.whatsapp || client.telephone}')">💬</button>
+                        </td>
+                    </tr>
+                `).join('');
+            } catch (err) {
+                showAlert('❌ Erreur chargement clients', 'error');
+            }
+        }
+
+        // ===== PRESSING =====
+        document.getElementById('pressingForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            
+            try {
+                const response = await fetch(`${API_URL}/pressing`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(Object.fromEntries(formData))
+                });
+                
+                const data = await response.json();
+                showAlert('✅ Service créé! Reçu imprimable généré');
+                e.target.reset();
+                loadPressing();
+            } catch (err) {
+                showAlert('❌ Erreur: ' + err.message, 'error');
+            }
+        });
+
+        async function loadPressing() {
+            try {
+                const response = await fetch(`${API_URL}/pressing`);
+                const services = await response.json();
+                
+                const tbody = document.querySelector('#pressingTable tbody');
+                tbody.innerHTML = services.map(service => `
+                    <tr>
+                        <td>${service.nom}</td>
+                        <td>${service.type_service}</td>
+                        <td>${service.prix_total.toLocaleString()} FCFA</td>
+                        <td><span class="badge badge-${service.statut}">${service.statut}</span></td>
+                        <td>
+                            <button class="btn btn-small btn-primary" onclick="printReceipt('pressing', '${service.id}')">🖨️</button>
+                            <button class="btn btn-small btn-success" onclick="sendReceipt('${service.id}')">✅</button>
+                        </td>
+                    </tr>
+                `).join('');
+            } catch (err) {
+                showAlert('❌ Erreur chargement pressing', 'error');
+            }
+        }
+
+        // ===== MÉDICAMENTS =====
+        document.getElementById('medicamentForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            
+            try {
+                const response = await fetch(`${API_URL}/medicaments`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(Object.fromEntries(formData))
+                });
+                
+                const data = await response.json();
+                showAlert('✅ Médicament ajouté!');
+                e.target.reset();
+                loadMedicaments();
+            } catch (err) {
+                showAlert('❌ Erreur: ' + err.message, 'error');
+            }
+        });
+
+        document.getElementById('venteMedicamentForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            
+            try {
+                const response = await fetch(`${API_URL}/ventes-medicaments`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        client_id: formData.get('client_id'),
+                        articles: [{
+                            medicament_id: formData.get('medicament_id'),
+                            quantite: parseInt(formData.get('quantite')),
+                            prix_unitaire: 5000 // À récupérer dynamiquement
+                        }]
+                    })
+                });
+                
+                const data = await response.json();
+                showAlert('✅ Vente enregistrée! Montant: ' + data.montant_total + ' FCFA');
+                e.target.reset();
+                loadMedicaments();
+            } catch (err) {
+                showAlert('❌ Erreur: ' + err.message, 'error');
+            }
+        });
+
+        async function loadMedicaments() {
+            try {
+                const response = await fetch(`${API_URL}/medicaments`);
+                const meds = await response.json();
+                
+                // Update dropdown
+                const select = document.querySelector('select[name="medicament_id"]');
+                select.innerHTML = '<option value="">-- Sélectionner --</option>';
+                meds.forEach(med => {
+                    select.innerHTML += `<option value="${med.id}">${med.nom} ${med.dosage || ''}</option>`;
+                });
+                
+                // Update table
+                const tbody = document.querySelector('#medicamentsTable tbody');
+                tbody.innerHTML = meds.map(med => `
+                    <tr>
+                        <td>${med.nom}</td>
+                        <td>${med.dosage || '-'}</td>
+                        <td>${med.quantite_stock}</td>
+                        <td>${med.prix_vente} FCFA</td>
+                        <td>
+                            ${med.quantite_stock <= med.quantite_min ? 
+                                '<span class="badge badge-pret" style="background: #FFEBEE; color: var(--danger);">Rupture!</span>' :
+                                '<span class="badge badge-pret">OK</span>'}
+                        </td>
+                    </tr>
+                `).join('');
+            } catch (err) {
+                showAlert('❌ Erreur chargement médicaments', 'error');
+            }
+        }
+
+        // ===== SERVICES INFIRMIERS =====
+        document.getElementById('serviceForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            
+            try {
+                const response = await fetch(`${API_URL}/services-infirmiers`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(Object.fromEntries(formData))
+                });
+                
+                const data = await response.json();
+                showAlert('✅ Service programmé!');
+                e.target.reset();
+                loadServices();
+            } catch (err) {
+                showAlert('❌ Erreur: ' + err.message, 'error');
+            }
+        });
+
+        async function loadServices() {
+            try {
+                const response = await fetch(`${API_URL}/services-infirmiers`);
+                const services = await response.json();
+                
+                const tbody = document.querySelector('#servicesTable tbody');
+                tbody.innerHTML = services.map(service => `
+                    <tr>
+                        <td>${service.nom}</td>
+                        <td>${service.type_service}</td>
+                        <td>${new Date(service.date_service).toLocaleString('fr-FR')}</td>
+                        <td>${service.prix} FCFA</td>
+                        <td>
+                            <button class="btn btn-small btn-primary" onclick="printReceipt('service', '${service.id}')">🖨️</button>
+                        </td>
+                    </tr>
+                `).join('');
+            } catch (err) {
+                showAlert('❌ Erreur chargement services', 'error');
+            }
+        }
+
+        // ===== DASHBOARD =====
+        async function loadDashboard() {
+            try {
+                const response = await fetch(`${API_URL}/dashboard`);
+                const stats = await response.json();
+                
+                document.getElementById('stat-clients').textContent = stats.total_clients || 0;
+                document.getElementById('stat-pressing').textContent = (stats.revenus_pressing_mois || 0).toLocaleString() + ' FCFA';
+                document.getElementById('stat-medicaments').textContent = (stats.revenus_medicaments_mois || 0).toLocaleString() + ' FCFA';
+                document.getElementById('stat-rupture').textContent = stats.medicaments_rupture || 0;
+            } catch (err) {
+                showAlert('❌ Erreur dashboard', 'error');
+            }
+        }
+
+        // ===== RAPPORTS =====
+        async function loadRapports() {
+            loadDashboard();
+            showAlert('📊 Rapports chargés');
+        }
+
+        // Utility Functions
+        function sendWhatsApp(number) {
+            document.getElementById('whatsappNumber').value = number;
+            document.getElementById('whatsappMessage').value = 'Bonjour! 👋 Merci pour votre confiance. Comment puis-je vous aider?';
+            openModal('whatsappModal');
+        }
+
+        function sendReceipt(serviceId) {
+            const message = `Bonjour! ✅ Votre service de pressing est prêt! Veuillez venir le chercher. Merci!`;
+            sendWhatsApp('237xxxxxxxxxx'); // À adapter
+        }
+
+        function printReceipt(type, id) {
+            window.print();
+        }
+
+        function exportReport(type) {
+            showAlert('📥 Export en préparation... (CSV)');
+        }
+
+        function editClient(id) {
+            showAlert('✏️ Édition client ' + id);
+        }
+
+        // Initial load
+        loadDashboard();
+        loadClients();
+    </script>
+</body>
+</html>
